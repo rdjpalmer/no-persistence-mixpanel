@@ -2,7 +2,8 @@
   "name": "no-persistence-mixpanel",
   "version": "1.0.0",
   "description": "Minimal wrapper of the Mixpanel HTTP api. Avoid cookie banners and add analytics to figma plugins",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "repository": "git@github.com:rdjpalmer/no-persistence-mixpanel.git",
   "author": "Richard Palmer <rich@rdjpalmer.com>",
   "license": "MIT",
@@ -17,9 +18,12 @@
     "ts-node": "^10.4.0",
     "tslint": "^6.1.3",
     "tslint-config-prettier": "^1.18.0",
-    "typescript": "^4.4.4"
+    "typescript": "^4.4.4",
+    "@types/figma": "^1.0.4",
+    "cross-fetch": "^3.1.4"
   },
   "scripts": {
+    "prepare" : "npm run build",
     "build": "tsc",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -27,9 +31,7 @@
     "lint": "tslint -p tsconfig.json"
   },
   "dependencies": {
-    "@types/figma": "^1.0.4",
     "@types/uuid": "^8.3.1",
-    "cross-fetch": "^3.1.4",
     "uuid": "^8.3.2"
   }
 }
