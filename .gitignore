@@ -1,2 +1,8 @@
 node_modules
 dist
+figma-code.d.ts
+figma-code.js
+figma-ui.d.ts
+figma-ui.js
+index.d.ts
+index.js
