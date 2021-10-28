@@ -1,6 +1,6 @@
 {
   "name": "no-persistence-mixpanel",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Minimal wrapper of the Mixpanel HTTP api. Avoid cookie banners and add analytics to figma plugins",
   "main": "index.js",
   "types": "index.d.ts",
