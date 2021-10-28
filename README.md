@@ -43,13 +43,13 @@ Note, it assumes you're using a bundler such as Webpack.
  * code.ts
  */
 import { setupIdentification } from "no-persistence-mixpanel/figma-code";
-setupIndentifcation();
+setupIdentification();
 
 /**
  * ui.ts
  */
-import { initialise } from "no-persistence-mixpanel/figma-ui";
-initialise(/* Your project token */, (mixpanel) => {
+import { init } from "no-persistence-mixpanel/figma-ui";
+init(/* Your project token */, (mixpanel) => {
   mixpanel.track("Plugin Opened");
 });
 ```
