@@ -8,10 +8,16 @@ In the case of figma, the library provides helper methods to do this automatical
 
 ## Installation
 
-```bash
-$ npm install no-persistence-mixpanel
+### NPM
 
-$ yarn add no-persistence-mixpanel
+```bash
+npm install no-persistence-mixpanel
+```
+
+### Yarn
+
+```bash
+yarn add no-persistence-mixpanel
 ```
 
 ## Usage
