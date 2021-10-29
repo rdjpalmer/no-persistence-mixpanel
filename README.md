@@ -36,14 +36,28 @@ mixpanel.track("Page Viewed");
 
 If you're using this package for a Figma plugin, the library provides additional helper methods to manage the user's identity.
 
-Note, it assumes you're using a bundler such as Webpack.
+In order to use them, you'll need to be using a bundler, such as webpack, and give your plugin `currentuser` permissions:
 
 ```ts
+/**
+ * manifest.json
+ */
+{
+  "name": "example",
+  "id": "1234",
+  "api": "1.0.0",
+  "main": "dist/code.js",
+  "editorType": ["figma", "figjam"],
+  "ui": "dist/ui.html"
+  // Required permissions
+  "permissions": ["currentuser"],
+}
+
 /**
  * code.ts
  */
 import { setupIdentification } from "no-persistence-mixpanel/figma-code";
-setupIdentification();
+setupIdentification(figma);
 
 /**
  * ui.ts
