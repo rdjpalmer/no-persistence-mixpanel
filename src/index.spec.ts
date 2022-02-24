@@ -13,20 +13,20 @@ describe("Mixpanel library", () => {
       mixpanel.identify("1234");
 
       const response = await mixpanel.track("Page Viewed", { loggedIn: true });
-      const parameters = new URLSearchParams(await response.json());
-      const jsonString = parameters.get("data");
-      const data = jsonString ? JSON.parse(jsonString) : {};
+      const data = await response.json();
 
       expect(response.status).toBe(200);
       expect(response.url).toBe("https://api.mixpanel.com/track");
-      expect(data).toEqual({
-        event: "Page Viewed",
-        properties: {
-          loggedIn: true,
-          distinct_id: "1234",
-          token: "dummy-token",
+      expect(data).toEqual([
+        {
+          event: "Page Viewed",
+          properties: {
+            loggedIn: true,
+            distinct_id: "1234",
+            token: "dummy-token",
+          },
         },
-      });
+      ]);
     });
   });
 
@@ -44,19 +44,19 @@ describe("Mixpanel library", () => {
       mixpanel.identify("1234");
 
       const response = await mixpanel.setUserProperty({ hasAccount: true });
-      const parameters = new URLSearchParams(await response.json());
-      const jsonString = parameters.get("data");
-      const data = jsonString ? JSON.parse(jsonString) : {};
+      const data = await response.json();
 
       expect(response.status).toBe(200);
       expect(response.url).toBe("https://api.mixpanel.com/engage#profile-set");
-      expect(data).toEqual({
-        $set: {
-          hasAccount: true,
+      expect(data).toEqual([
+        {
+          $set: {
+            hasAccount: true,
+          },
+          distinct_id: "1234",
+          token: "dummy-token",
         },
-        distinct_id: "1234",
-        token: "dummy-token",
-      });
+      ]);
     });
   });
 
@@ -74,21 +74,21 @@ describe("Mixpanel library", () => {
       mixpanel.identify("1234");
 
       const response = await mixpanel.setUserPropertyOnce({ hasAccount: true });
-      const parameters = new URLSearchParams(await response.json());
-      const jsonString = parameters.get("data");
-      const data = jsonString ? JSON.parse(jsonString) : {};
+      const data = await response.json();
 
       expect(response.status).toBe(200);
       expect(response.url).toBe(
         "https://api.mixpanel.com/engage#profile-set-once"
       );
-      expect(data).toEqual({
-        $set_once: {
-          hasAccount: true,
+      expect(data).toEqual([
+        {
+          $set_once: {
+            hasAccount: true,
+          },
+          distinct_id: "1234",
+          token: "dummy-token",
         },
-        distinct_id: "1234",
-        token: "dummy-token",
-      });
+      ]);
     });
   });
 
@@ -108,21 +108,21 @@ describe("Mixpanel library", () => {
       const response = await mixpanel.incrementUserNumericalProperty({
         bitcoins: 100,
       });
-      const parameters = new URLSearchParams(await response.json());
-      const jsonString = parameters.get("data");
-      const data = jsonString ? JSON.parse(jsonString) : {};
+      const data = await response.json();
 
       expect(response.status).toBe(200);
       expect(response.url).toBe(
         "https://api.mixpanel.com/engage#profile-numerical-add"
       );
-      expect(data).toEqual({
-        $add: {
-          bitcoins: 100,
+      expect(data).toEqual([
+        {
+          $add: {
+            bitcoins: 100,
+          },
+          distinct_id: "1234",
+          token: "dummy-token",
         },
-        distinct_id: "1234",
-        token: "dummy-token",
-      });
+      ]);
     });
   });
 
@@ -142,21 +142,21 @@ describe("Mixpanel library", () => {
       const response = await mixpanel.unionUserListProperty({
         items: ["sword", "shield"],
       });
-      const parameters = new URLSearchParams(await response.json());
-      const jsonString = parameters.get("data");
-      const data = jsonString ? JSON.parse(jsonString) : {};
+      const data = await response.json();
 
       expect(response.status).toBe(200);
       expect(response.url).toBe(
         "https://api.mixpanel.com/engage#profile-union"
       );
-      expect(data).toEqual({
-        $union: {
-          items: ["sword", "shield"],
+      expect(data).toEqual([
+        {
+          $union: {
+            items: ["sword", "shield"],
+          },
+          distinct_id: "1234",
+          token: "dummy-token",
         },
-        distinct_id: "1234",
-        token: "dummy-token",
-      });
+      ]);
     });
   });
 
@@ -176,21 +176,21 @@ describe("Mixpanel library", () => {
       const response = await mixpanel.appendUserListProperty({
         items: "arrow",
       });
-      const parameters = new URLSearchParams(await response.json());
-      const jsonString = parameters.get("data");
-      const data = jsonString ? JSON.parse(jsonString) : {};
+      const data = await response.json();
 
       expect(response.status).toBe(200);
       expect(response.url).toBe(
         "https://api.mixpanel.com/engage#profile-list-append"
       );
-      expect(data).toEqual({
-        $append: {
-          items: "arrow",
+      expect(data).toEqual([
+        {
+          $append: {
+            items: "arrow",
+          },
+          distinct_id: "1234",
+          token: "dummy-token",
         },
-        distinct_id: "1234",
-        token: "dummy-token",
-      });
+      ]);
     });
   });
 
@@ -210,21 +210,21 @@ describe("Mixpanel library", () => {
       const response = await mixpanel.removeUserListProperty({
         items: "arrow",
       });
-      const parameters = new URLSearchParams(await response.json());
-      const jsonString = parameters.get("data");
-      const data = jsonString ? JSON.parse(jsonString) : {};
+      const data = await response.json();
 
       expect(response.status).toBe(200);
       expect(response.url).toBe(
         "https://api.mixpanel.com/engage#profile-list-remove"
       );
-      expect(data).toEqual({
-        $remove: {
-          items: "arrow",
+      expect(data).toEqual([
+        {
+          $remove: {
+            items: "arrow",
+          },
+          distinct_id: "1234",
+          token: "dummy-token",
         },
-        distinct_id: "1234",
-        token: "dummy-token",
-      });
+      ]);
     });
   });
 
@@ -242,19 +242,19 @@ describe("Mixpanel library", () => {
       mixpanel.identify("1234");
 
       const response = await mixpanel.removeUserProperty(["hasAccount"]);
-      const parameters = new URLSearchParams(await response.json());
-      const jsonString = parameters.get("data");
-      const data = jsonString ? JSON.parse(jsonString) : {};
+      const data = await response.json();
 
       expect(response.status).toBe(200);
       expect(response.url).toBe(
         "https://api.mixpanel.com/engage#profile-unset"
       );
-      expect(data).toEqual({
-        $unset: ["hasAccount"],
-        distinct_id: "1234",
-        token: "dummy-token",
-      });
+      expect(data).toEqual([
+        {
+          $unset: ["hasAccount"],
+          distinct_id: "1234",
+          token: "dummy-token",
+        },
+      ]);
     });
   });
 });

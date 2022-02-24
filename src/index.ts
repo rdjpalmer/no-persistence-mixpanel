@@ -8,7 +8,7 @@ export default class Mixpanel {
     method: "POST",
     headers: {
       Accept: "text/plain",
-      "Content-Type": "application/x-www-form-urlencoded",
+      "Content-Type": "application/json",
     },
   };
 
@@ -29,16 +29,16 @@ export default class Mixpanel {
 
     const options = {
       ...this.defaultOptions,
-      body: new URLSearchParams({
-        data: JSON.stringify({
+      body: JSON.stringify([
+        {
           event,
           properties: {
             ...properties,
             distinct_id: this.distinctId,
             token: this.token,
           },
-        }),
-      }),
+        },
+      ]),
     };
 
     return fetch("https://api.mixpanel.com/track", options);
@@ -53,13 +53,13 @@ export default class Mixpanel {
 
     const options = {
       ...this.defaultOptions,
-      body: new URLSearchParams({
-        data: JSON.stringify({
+      body: JSON.stringify([
+        {
           $set: properties,
           distinct_id: this.distinctId,
           token: this.token,
-        }),
-      }),
+        },
+      ]),
     };
 
     return fetch("https://api.mixpanel.com/engage#profile-set", options);
@@ -74,13 +74,13 @@ export default class Mixpanel {
 
     const options = {
       ...this.defaultOptions,
-      body: new URLSearchParams({
-        data: JSON.stringify({
+      body: JSON.stringify([
+        {
           $set_once: properties,
           distinct_id: this.distinctId,
           token: this.token,
-        }),
-      }),
+        },
+      ]),
     };
 
     return fetch("https://api.mixpanel.com/engage#profile-set-once", options);
@@ -97,13 +97,13 @@ export default class Mixpanel {
 
     const options = {
       ...this.defaultOptions,
-      body: new URLSearchParams({
-        data: JSON.stringify({
+      body: JSON.stringify([
+        {
           $add: properties,
           distinct_id: this.distinctId,
           token: this.token,
-        }),
-      }),
+        },
+      ]),
     };
 
     return fetch(
@@ -123,13 +123,13 @@ export default class Mixpanel {
 
     const options = {
       ...this.defaultOptions,
-      body: new URLSearchParams({
-        data: JSON.stringify({
+      body: JSON.stringify([
+        {
           $union: properties,
           distinct_id: this.distinctId,
           token: this.token,
-        }),
-      }),
+        },
+      ]),
     };
 
     return fetch("https://api.mixpanel.com/engage#profile-union", options);
@@ -146,13 +146,13 @@ export default class Mixpanel {
 
     const options = {
       ...this.defaultOptions,
-      body: new URLSearchParams({
-        data: JSON.stringify({
+      body: JSON.stringify([
+        {
           $append: properties,
           distinct_id: this.distinctId,
           token: this.token,
-        }),
-      }),
+        },
+      ]),
     };
 
     return fetch(
@@ -172,13 +172,13 @@ export default class Mixpanel {
 
     const options = {
       ...this.defaultOptions,
-      body: new URLSearchParams({
-        data: JSON.stringify({
+      body: JSON.stringify([
+        {
           $remove: properties,
           distinct_id: this.distinctId,
           token: this.token,
-        }),
-      }),
+        },
+      ]),
     };
 
     return fetch(
@@ -196,13 +196,13 @@ export default class Mixpanel {
 
     const options = {
       ...this.defaultOptions,
-      body: new URLSearchParams({
-        data: JSON.stringify({
+      body: JSON.stringify([
+        {
           $unset: properties,
           distinct_id: this.distinctId,
           token: this.token,
-        }),
-      }),
+        },
+      ]),
     };
 
     return fetch("https://api.mixpanel.com/engage#profile-unset", options);
