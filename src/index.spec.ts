@@ -1,4 +1,3 @@
-import { stringify } from "qs";
 import Mixpanel from ".";
 
 describe("Mixpanel library", () => {
