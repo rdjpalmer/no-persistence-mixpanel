@@ -1,36 +1,28 @@
 import type { Dict } from "mixpanel-browser";
 
+/**
+ * Allow usage `application/json` for React Native support.
+ */
+type ContentType = "application/x-www-form-urlencoded" | "application/json";
+
 interface Options {
-  method: "POST";
-  headers: {
-    Accept: "text/plain" | "application/json";
-    "Content-Type": "application/x-www-form-urlencoded" | "application/json";
-  };
+  contentType?: ContentType;
 }
 
 export default class Mixpanel {
   private token: string;
   private distinctId?: string;
+  private readonly options;
 
-  private readonly defaultOptions: Options = {
-    method: "POST",
-    headers: {
-      Accept: "text/plain",
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-  };
-
-  private options: Options = this.defaultOptions;
-
-  constructor(token: string, options: Partial<Options> = {}) {
+  constructor(token: string, options: Options = {}) {
     this.token = token;
 
     this.options = {
-      ...this.defaultOptions,
-      ...options,
+      method: "POST",
       headers: {
-        ...this.defaultOptions.headers,
-        ...(options.headers || {}),
+        Accept: "text/plain",
+        "Content-Type":
+          options?.contentType || "application/x-www-form-urlencoded",
       },
     };
   }
