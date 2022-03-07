@@ -1,19 +1,39 @@
+import { stringify } from "qs";
 import type { Dict } from "mixpanel-browser";
+
+interface Options {
+  method: "POST";
+  headers: {
+    Accept: "text/plain" | "application/json";
+    "Content-Type": "application/x-www-form-urlencoded" | "application/json";
+  };
+}
 
 export default class Mixpanel {
   private token: string;
   private distinctId?: string;
 
-  private readonly defaultOptions = {
+  private readonly defaultOptions: Options = {
     method: "POST",
     headers: {
       Accept: "text/plain",
-      "Content-Type": "application/json",
+      "Content-Type": "application/x-www-form-urlencoded",
     },
   };
 
-  constructor(token: string) {
+  private options: Options = this.defaultOptions;
+
+  constructor(token: string, options: Partial<Options>) {
     this.token = token;
+
+    this.options = {
+      ...this.defaultOptions,
+      ...options,
+      headers: {
+        ...this.defaultOptions.headers,
+        ...options.headers,
+      },
+    };
   }
 
   public identify(distinctId: string): void {
@@ -28,8 +48,8 @@ export default class Mixpanel {
     }
 
     const options = {
-      ...this.defaultOptions,
-      body: JSON.stringify([
+      ...this.options,
+      body: stringify([
         {
           event,
           properties: {
@@ -52,7 +72,7 @@ export default class Mixpanel {
     }
 
     const options = {
-      ...this.defaultOptions,
+      ...this.options,
       body: JSON.stringify([
         {
           $set: properties,
@@ -73,7 +93,7 @@ export default class Mixpanel {
     }
 
     const options = {
-      ...this.defaultOptions,
+      ...this.options,
       body: JSON.stringify([
         {
           $set_once: properties,
@@ -96,7 +116,7 @@ export default class Mixpanel {
     }
 
     const options = {
-      ...this.defaultOptions,
+      ...this.options,
       body: JSON.stringify([
         {
           $add: properties,
@@ -122,7 +142,7 @@ export default class Mixpanel {
     }
 
     const options = {
-      ...this.defaultOptions,
+      ...this.options,
       body: JSON.stringify([
         {
           $union: properties,
@@ -145,7 +165,7 @@ export default class Mixpanel {
     }
 
     const options = {
-      ...this.defaultOptions,
+      ...this.options,
       body: JSON.stringify([
         {
           $append: properties,
@@ -171,7 +191,7 @@ export default class Mixpanel {
     }
 
     const options = {
-      ...this.defaultOptions,
+      ...this.options,
       body: JSON.stringify([
         {
           $remove: properties,
@@ -195,7 +215,7 @@ export default class Mixpanel {
     }
 
     const options = {
-      ...this.defaultOptions,
+      ...this.options,
       body: JSON.stringify([
         {
           $unset: properties,

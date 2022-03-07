@@ -30,5 +30,8 @@
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
     "lint": "tslint -p tsconfig.json"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@types/qs": "^6.9.7",
+    "qs": "^6.10.3"
+  }
 }
