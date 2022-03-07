@@ -1,4 +1,3 @@
-import { stringify } from "qs";
 import type { Dict } from "mixpanel-browser";
 
 interface Options {
@@ -23,7 +22,7 @@ export default class Mixpanel {
 
   private options: Options = this.defaultOptions;
 
-  constructor(token: string, options: Partial<Options>) {
+  constructor(token: string, options: Partial<Options> = {}) {
     this.token = token;
 
     this.options = {
@@ -31,7 +30,7 @@ export default class Mixpanel {
       ...options,
       headers: {
         ...this.defaultOptions.headers,
-        ...options.headers,
+        ...(options.headers || {}),
       },
     };
   }
@@ -49,7 +48,7 @@ export default class Mixpanel {
 
     const options = {
       ...this.options,
-      body: stringify([
+      body: JSON.stringify([
         {
           event,
           properties: {
