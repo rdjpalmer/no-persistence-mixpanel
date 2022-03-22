@@ -31,6 +31,40 @@ export default class Mixpanel {
     this.distinctId = distinctId;
   }
 
+  /**
+   * When maintaining an anonymous id in your code base, you may want to
+   * merge the anonymous id with one existing in your database.
+   *
+   * This is traditional Mixpanel behaviour when calling `mixpanel.identify()`
+   */
+  public createIdentity(
+    distinctId: string,
+    anonymousId: string
+  ): Promise<Response> {
+    if (typeof distinctId === "undefined") {
+      throw new Error("Mixpanel: Please supply a new distinctId");
+    }
+
+    this.distinctId = distinctId;
+
+    const options = {
+      ...this.options,
+      body: JSON.stringify([
+        {
+          event: "$identify",
+          properties: {
+            distinct_id: this.distinctId,
+            $identified_id: this.distinctId,
+            $anon_id: anonymousId,
+            token: this.token,
+          },
+        },
+      ]),
+    };
+
+    return fetch("https://api.mixpanel.com/track#create-identity", options);
+  }
+
   public track(event: string, properties: Dict = {}): Promise<Response> {
     if (typeof this.distinctId === "undefined") {
       throw new Error(
