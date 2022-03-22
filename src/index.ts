@@ -9,6 +9,11 @@ interface Options {
   contentType?: ContentType;
 }
 
+type ResponseJsonBody = 1 | 0;
+interface MixpanelResponse extends Response {
+  json(): Promise<ResponseJsonBody>;
+}
+
 export default class Mixpanel {
   private token: string;
   private distinctId?: string;
@@ -31,7 +36,44 @@ export default class Mixpanel {
     this.distinctId = distinctId;
   }
 
-  public track(event: string, properties: Dict = {}): Promise<Response> {
+  /**
+   * When maintaining an anonymous id in your code base, you may want to
+   * merge the anonymous id with one existing in your database.
+   *
+   * This is traditional Mixpanel behaviour when calling `mixpanel.indentify()`
+   */
+  public createIdentity(
+    distinctId: string,
+    anonymousId: string
+  ): Promise<MixpanelResponse> {
+    if (typeof distinctId === "undefined") {
+      throw new Error("Mixpanel: Please supply a new distinctId");
+    }
+
+    this.distinctId = distinctId;
+
+    const options = {
+      ...this.options,
+      body: JSON.stringify([
+        {
+          event: "$identify",
+          properties: {
+            distinct_id: this.distinctId,
+            $identified_id: this.distinctId,
+            $anon_id: anonymousId,
+            token: this.token,
+          },
+        },
+      ]),
+    };
+
+    return fetch("https://api.mixpanel.com/track#create-identity", options);
+  }
+
+  public track(
+    event: string,
+    properties: Dict = {}
+  ): Promise<MixpanelResponse> {
     if (typeof this.distinctId === "undefined") {
       throw new Error(
         "Mixpanel: Please call mixpanel.identify before calling mixpanel.track"
@@ -55,7 +97,7 @@ export default class Mixpanel {
     return fetch("https://api.mixpanel.com/track", options);
   }
 
-  public setUserProperty(properties: Dict): Promise<Response> {
+  public setUserProperty(properties: Dict): Promise<MixpanelResponse> {
     if (typeof this.distinctId === "undefined") {
       throw new Error(
         "Mixpanel: Please call mixpanel.identify before calling mixpanel.setUserProperty"
@@ -76,7 +118,7 @@ export default class Mixpanel {
     return fetch("https://api.mixpanel.com/engage#profile-set", options);
   }
 
-  public setUserPropertyOnce(properties: Dict): Promise<Response> {
+  public setUserPropertyOnce(properties: Dict): Promise<MixpanelResponse> {
     if (typeof this.distinctId === "undefined") {
       throw new Error(
         "Mixpanel: Please call mixpanel.identify before calling mixpanel.setUserProperty"
@@ -99,7 +141,7 @@ export default class Mixpanel {
 
   public incrementUserNumericalProperty(
     properties: Record<string, number>
-  ): Promise<Response> {
+  ): Promise<MixpanelResponse> {
     if (typeof this.distinctId === "undefined") {
       throw new Error(
         "Mixpanel: Please call mixpanel.identify before calling mixpanel.incrementUserNumbericalProperty"
@@ -125,7 +167,7 @@ export default class Mixpanel {
 
   public unionUserListProperty(
     properties: Record<string, string[]>
-  ): Promise<Response> {
+  ): Promise<MixpanelResponse> {
     if (typeof this.distinctId === "undefined") {
       throw new Error(
         "Mixpanel: Please call mixpanel.identify before calling mixpanel.unionUserListProperty"
@@ -148,7 +190,7 @@ export default class Mixpanel {
 
   public appendUserListProperty(
     properties: Record<string, string>
-  ): Promise<Response> {
+  ): Promise<MixpanelResponse> {
     if (typeof this.distinctId === "undefined") {
       throw new Error(
         "Mixpanel: Please call mixpanel.identify before calling mixpanel.appendUserListProperty"
@@ -174,7 +216,7 @@ export default class Mixpanel {
 
   public removeUserListProperty(
     properties: Record<string, string>
-  ): Promise<Response> {
+  ): Promise<MixpanelResponse> {
     if (typeof this.distinctId === "undefined") {
       throw new Error(
         "Mixpanel: Please call mixpanel.identify before calling mixpanel.removeUserListProperty"
@@ -198,7 +240,7 @@ export default class Mixpanel {
     );
   }
 
-  public removeUserProperty(properties: string[]): Promise<Response> {
+  public removeUserProperty(properties: string[]): Promise<MixpanelResponse> {
     if (typeof this.distinctId === "undefined") {
       throw new Error(
         "Mixpanel: Please call mixpanel.identify before calling mixpanel.removeUserProperty"

@@ -32,6 +32,40 @@ describe("Mixpanel library", () => {
     });
   });
 
+  describe("#createIdentity", () => {
+    it("creates a new identity", async () => {
+      const mixpanel = new Mixpanel("dummy-token");
+
+      const response = await mixpanel.createIdentity("1234", "0000");
+      const data = await response.json();
+
+      expect(response.status).toBe(200);
+      expect(response.url).toBe(
+        "https://api.mixpanel.com/track#create-identity"
+      );
+      expect(data).toEqual(
+        JSON.stringify([
+          {
+            event: "$identify",
+            properties: {
+              distinct_id: "1234",
+              $identified_id: "1234",
+              $anon_id: "0000",
+              token: "dummy-token",
+            },
+          },
+        ])
+      );
+    });
+
+    it("identifies the user", async () => {
+      const mixpanel = new Mixpanel("dummy-token");
+      await mixpanel.createIdentity("1234", "0000");
+
+      expect(() => mixpanel.track("test")).not.toThrow();
+    });
+  });
+
   describe("#setUserProperty", () => {
     it("does not set the user property without a identification", () => {
       const mixpanel = new Mixpanel("dummy-token");
