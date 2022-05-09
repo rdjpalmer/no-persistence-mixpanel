@@ -1,17 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Mixpanel library #appendUserListProperty does not append the property without a identification 1`] = `"Mixpanel: Please call mixpanel.identify before calling mixpanel.appendUserListProperty"`;
+exports[`Mixpanel library #appendUserListProperty does not append the property without an identity 1`] = `"Mixpanel: Please call mixpanel.identify before calling mixpanel.appendUserListProperty"`;
 
-exports[`Mixpanel library #incrementUserNumericalProperty does not set the user property without a identification 1`] = `"Mixpanel: Please call mixpanel.identify before calling mixpanel.incrementUserNumbericalProperty"`;
+exports[`Mixpanel library #incrementUserNumericalProperty does not set the user property without an identity 1`] = `"Mixpanel: Please call mixpanel.identify before calling mixpanel.incrementUserNumbericalProperty"`;
 
-exports[`Mixpanel library #removeUserListProperty does not remove the property without a identification 1`] = `"Mixpanel: Please call mixpanel.identify before calling mixpanel.removeUserListProperty"`;
+exports[`Mixpanel library #removeUserListProperty does not remove the property without an identity 1`] = `"Mixpanel: Please call mixpanel.identify before calling mixpanel.removeUserListProperty"`;
 
-exports[`Mixpanel library #removeUserProperty does not remove the user property without a identification 1`] = `"Mixpanel: Please call mixpanel.identify before calling mixpanel.removeUserProperty"`;
+exports[`Mixpanel library #removeUserProperty does not remove the user property without an identity 1`] = `"Mixpanel: Please call mixpanel.identify before calling mixpanel.removeUserProperty"`;
 
-exports[`Mixpanel library #setUserProperty does not set the user property without a identification 1`] = `"Mixpanel: Please call mixpanel.identify before calling mixpanel.setUserProperty"`;
+exports[`Mixpanel library #setUserProperty does not set the user property without an identity 1`] = `"Mixpanel: Please call mixpanel.identify before calling mixpanel.setUserProperty"`;
 
-exports[`Mixpanel library #setUserPropertyOnce does not set the user property without a identification 1`] = `"Mixpanel: Please call mixpanel.identify before calling mixpanel.setUserProperty"`;
+exports[`Mixpanel library #setUserPropertyOnce does not set the user property without an identity 1`] = `"Mixpanel: Please call mixpanel.identify before calling mixpanel.setUserProperty"`;
 
-exports[`Mixpanel library #track does not track without a identification 1`] = `"Mixpanel: Please call mixpanel.identify before calling mixpanel.track"`;
+exports[`Mixpanel library #track does not track without an identity 1`] = `"Mixpanel: Please call mixpanel.identify before calling mixpanel.track"`;
 
-exports[`Mixpanel library #unionUserListProperty does not unionise the property without a identification 1`] = `"Mixpanel: Please call mixpanel.identify before calling mixpanel.unionUserListProperty"`;
+exports[`Mixpanel library #unionUserListProperty does not unionise the property without an identity 1`] = `"Mixpanel: Please call mixpanel.identify before calling mixpanel.unionUserListProperty"`;
