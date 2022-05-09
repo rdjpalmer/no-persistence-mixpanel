@@ -2,7 +2,7 @@ import Mixpanel from ".";
 
 describe("Mixpanel library", () => {
   describe("#track", () => {
-    it("does not track without a identification", () => {
+    it("does not track without an identity", () => {
       const mixpanel = new Mixpanel("dummy-token");
 
       expect(() => mixpanel.track("test")).toThrowErrorMatchingSnapshot();
@@ -67,7 +67,7 @@ describe("Mixpanel library", () => {
   });
 
   describe("#setUserProperty", () => {
-    it("does not set the user property without a identification", () => {
+    it("does not set the user property without an identity", () => {
       const mixpanel = new Mixpanel("dummy-token");
 
       expect(() =>
@@ -90,7 +90,7 @@ describe("Mixpanel library", () => {
             $set: {
               hasAccount: true,
             },
-            distinct_id: "1234",
+            $distinct_id: "1234",
             token: "dummy-token",
           },
         ])
@@ -99,7 +99,7 @@ describe("Mixpanel library", () => {
   });
 
   describe("#setUserPropertyOnce", () => {
-    it("does not set the user property without a identification", () => {
+    it("does not set the user property without an identity", () => {
       const mixpanel = new Mixpanel("dummy-token");
 
       expect(() =>
@@ -124,7 +124,7 @@ describe("Mixpanel library", () => {
             $set_once: {
               hasAccount: true,
             },
-            distinct_id: "1234",
+            $distinct_id: "1234",
             token: "dummy-token",
           },
         ])
@@ -133,7 +133,7 @@ describe("Mixpanel library", () => {
   });
 
   describe("#incrementUserNumericalProperty", () => {
-    it("does not set the user property without a identification", () => {
+    it("does not set the user property without an identity", () => {
       const mixpanel = new Mixpanel("dummy-token");
 
       expect(() =>
@@ -160,7 +160,7 @@ describe("Mixpanel library", () => {
             $add: {
               bitcoins: 100,
             },
-            distinct_id: "1234",
+            $distinct_id: "1234",
             token: "dummy-token",
           },
         ])
@@ -169,7 +169,7 @@ describe("Mixpanel library", () => {
   });
 
   describe("#unionUserListProperty", () => {
-    it("does not unionise the property without a identification", () => {
+    it("does not unionise the property without an identity", () => {
       const mixpanel = new Mixpanel("dummy-token");
 
       expect(() =>
@@ -196,7 +196,7 @@ describe("Mixpanel library", () => {
             $union: {
               items: ["sword", "shield"],
             },
-            distinct_id: "1234",
+            $distinct_id: "1234",
             token: "dummy-token",
           },
         ])
@@ -205,7 +205,7 @@ describe("Mixpanel library", () => {
   });
 
   describe("#appendUserListProperty", () => {
-    it("does not append the property without a identification", () => {
+    it("does not append the property without an identity", () => {
       const mixpanel = new Mixpanel("dummy-token");
 
       expect(() =>
@@ -232,7 +232,7 @@ describe("Mixpanel library", () => {
             $append: {
               items: "arrow",
             },
-            distinct_id: "1234",
+            $distinct_id: "1234",
             token: "dummy-token",
           },
         ])
@@ -241,7 +241,7 @@ describe("Mixpanel library", () => {
   });
 
   describe("#removeUserListProperty", () => {
-    it("does not remove the property without a identification", () => {
+    it("does not remove the property without an identity", () => {
       const mixpanel = new Mixpanel("dummy-token");
 
       expect(() =>
@@ -268,7 +268,7 @@ describe("Mixpanel library", () => {
             $remove: {
               items: "arrow",
             },
-            distinct_id: "1234",
+            $distinct_id: "1234",
             token: "dummy-token",
           },
         ])
@@ -277,7 +277,7 @@ describe("Mixpanel library", () => {
   });
 
   describe("#removeUserProperty", () => {
-    it("does not remove the user property without a identification", () => {
+    it("does not remove the user property without an identity", () => {
       const mixpanel = new Mixpanel("dummy-token");
 
       expect(() =>
@@ -300,7 +300,7 @@ describe("Mixpanel library", () => {
         JSON.stringify([
           {
             $unset: ["hasAccount"],
-            distinct_id: "1234",
+            $distinct_id: "1234",
             token: "dummy-token",
           },
         ])

@@ -27,6 +27,10 @@ export default class Mixpanel {
     };
   }
 
+  public isIdentified(): boolean {
+    return typeof this.distinctId !== "undefined";
+  }
+
   public identify(distinctId: string): void {
     this.distinctId = distinctId;
   }
@@ -66,7 +70,7 @@ export default class Mixpanel {
   }
 
   public track(event: string, properties: Dict = {}): Promise<Response> {
-    if (typeof this.distinctId === "undefined") {
+    if (!this.isIdentified()) {
       throw new Error(
         "Mixpanel: Please call mixpanel.identify before calling mixpanel.track"
       );
@@ -90,7 +94,7 @@ export default class Mixpanel {
   }
 
   public setUserProperty(properties: Dict): Promise<Response> {
-    if (typeof this.distinctId === "undefined") {
+    if (!this.isIdentified()) {
       throw new Error(
         "Mixpanel: Please call mixpanel.identify before calling mixpanel.setUserProperty"
       );
@@ -101,7 +105,7 @@ export default class Mixpanel {
       body: JSON.stringify([
         {
           $set: properties,
-          distinct_id: this.distinctId,
+          $distinct_id: this.distinctId,
           token: this.token,
         },
       ]),
@@ -111,7 +115,7 @@ export default class Mixpanel {
   }
 
   public setUserPropertyOnce(properties: Dict): Promise<Response> {
-    if (typeof this.distinctId === "undefined") {
+    if (!this.isIdentified()) {
       throw new Error(
         "Mixpanel: Please call mixpanel.identify before calling mixpanel.setUserProperty"
       );
@@ -122,7 +126,7 @@ export default class Mixpanel {
       body: JSON.stringify([
         {
           $set_once: properties,
-          distinct_id: this.distinctId,
+          $distinct_id: this.distinctId,
           token: this.token,
         },
       ]),
@@ -134,7 +138,7 @@ export default class Mixpanel {
   public incrementUserNumericalProperty(
     properties: Record<string, number>
   ): Promise<Response> {
-    if (typeof this.distinctId === "undefined") {
+    if (!this.isIdentified()) {
       throw new Error(
         "Mixpanel: Please call mixpanel.identify before calling mixpanel.incrementUserNumbericalProperty"
       );
@@ -145,7 +149,7 @@ export default class Mixpanel {
       body: JSON.stringify([
         {
           $add: properties,
-          distinct_id: this.distinctId,
+          $distinct_id: this.distinctId,
           token: this.token,
         },
       ]),
@@ -160,7 +164,7 @@ export default class Mixpanel {
   public unionUserListProperty(
     properties: Record<string, string[]>
   ): Promise<Response> {
-    if (typeof this.distinctId === "undefined") {
+    if (!this.isIdentified()) {
       throw new Error(
         "Mixpanel: Please call mixpanel.identify before calling mixpanel.unionUserListProperty"
       );
@@ -171,7 +175,7 @@ export default class Mixpanel {
       body: JSON.stringify([
         {
           $union: properties,
-          distinct_id: this.distinctId,
+          $distinct_id: this.distinctId,
           token: this.token,
         },
       ]),
@@ -183,7 +187,7 @@ export default class Mixpanel {
   public appendUserListProperty(
     properties: Record<string, string>
   ): Promise<Response> {
-    if (typeof this.distinctId === "undefined") {
+    if (!this.isIdentified()) {
       throw new Error(
         "Mixpanel: Please call mixpanel.identify before calling mixpanel.appendUserListProperty"
       );
@@ -194,7 +198,7 @@ export default class Mixpanel {
       body: JSON.stringify([
         {
           $append: properties,
-          distinct_id: this.distinctId,
+          $distinct_id: this.distinctId,
           token: this.token,
         },
       ]),
@@ -209,7 +213,7 @@ export default class Mixpanel {
   public removeUserListProperty(
     properties: Record<string, string>
   ): Promise<Response> {
-    if (typeof this.distinctId === "undefined") {
+    if (!this.isIdentified()) {
       throw new Error(
         "Mixpanel: Please call mixpanel.identify before calling mixpanel.removeUserListProperty"
       );
@@ -220,7 +224,7 @@ export default class Mixpanel {
       body: JSON.stringify([
         {
           $remove: properties,
-          distinct_id: this.distinctId,
+          $distinct_id: this.distinctId,
           token: this.token,
         },
       ]),
@@ -233,7 +237,7 @@ export default class Mixpanel {
   }
 
   public removeUserProperty(properties: string[]): Promise<Response> {
-    if (typeof this.distinctId === "undefined") {
+    if (!this.isIdentified()) {
       throw new Error(
         "Mixpanel: Please call mixpanel.identify before calling mixpanel.removeUserProperty"
       );
@@ -244,7 +248,7 @@ export default class Mixpanel {
       body: JSON.stringify([
         {
           $unset: properties,
-          distinct_id: this.distinctId,
+          $distinct_id: this.distinctId,
           token: this.token,
         },
       ]),
