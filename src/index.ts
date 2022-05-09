@@ -111,7 +111,7 @@ export default class Mixpanel {
   }
 
   public setUserPropertyOnce(properties: Dict): Promise<Response> {
-    if (typeof this.distinctId === "undefined") {
+    if (!this.isIdentified()) {
       throw new Error(
         "Mixpanel: Please call mixpanel.identify before calling mixpanel.setUserProperty"
       );
@@ -134,7 +134,7 @@ export default class Mixpanel {
   public incrementUserNumericalProperty(
     properties: Record<string, number>
   ): Promise<Response> {
-    if (typeof this.distinctId === "undefined") {
+    if (!this.isIdentified()) {
       throw new Error(
         "Mixpanel: Please call mixpanel.identify before calling mixpanel.incrementUserNumbericalProperty"
       );
@@ -160,7 +160,7 @@ export default class Mixpanel {
   public unionUserListProperty(
     properties: Record<string, string[]>
   ): Promise<Response> {
-    if (typeof this.distinctId === "undefined") {
+    if (!this.isIdentified()) {
       throw new Error(
         "Mixpanel: Please call mixpanel.identify before calling mixpanel.unionUserListProperty"
       );
@@ -183,7 +183,7 @@ export default class Mixpanel {
   public appendUserListProperty(
     properties: Record<string, string>
   ): Promise<Response> {
-    if (typeof this.distinctId === "undefined") {
+    if (!this.isIdentified()) {
       throw new Error(
         "Mixpanel: Please call mixpanel.identify before calling mixpanel.appendUserListProperty"
       );
@@ -209,7 +209,7 @@ export default class Mixpanel {
   public removeUserListProperty(
     properties: Record<string, string>
   ): Promise<Response> {
-    if (typeof this.distinctId === "undefined") {
+    if (!this.isIdentified()) {
       throw new Error(
         "Mixpanel: Please call mixpanel.identify before calling mixpanel.removeUserListProperty"
       );
@@ -233,7 +233,7 @@ export default class Mixpanel {
   }
 
   public removeUserProperty(properties: string[]): Promise<Response> {
-    if (typeof this.distinctId === "undefined") {
+    if (!this.isIdentified()) {
       throw new Error(
         "Mixpanel: Please call mixpanel.identify before calling mixpanel.removeUserProperty"
       );
