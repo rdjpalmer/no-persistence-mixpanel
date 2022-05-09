@@ -90,7 +90,7 @@ describe("Mixpanel library", () => {
             $set: {
               hasAccount: true,
             },
-            distinct_id: "1234",
+            $distinct_id: "1234",
             token: "dummy-token",
           },
         ])
@@ -124,7 +124,7 @@ describe("Mixpanel library", () => {
             $set_once: {
               hasAccount: true,
             },
-            distinct_id: "1234",
+            $distinct_id: "1234",
             token: "dummy-token",
           },
         ])
@@ -160,7 +160,7 @@ describe("Mixpanel library", () => {
             $add: {
               bitcoins: 100,
             },
-            distinct_id: "1234",
+            $distinct_id: "1234",
             token: "dummy-token",
           },
         ])
@@ -196,7 +196,7 @@ describe("Mixpanel library", () => {
             $union: {
               items: ["sword", "shield"],
             },
-            distinct_id: "1234",
+            $distinct_id: "1234",
             token: "dummy-token",
           },
         ])
@@ -232,7 +232,7 @@ describe("Mixpanel library", () => {
             $append: {
               items: "arrow",
             },
-            distinct_id: "1234",
+            $distinct_id: "1234",
             token: "dummy-token",
           },
         ])
@@ -268,7 +268,7 @@ describe("Mixpanel library", () => {
             $remove: {
               items: "arrow",
             },
-            distinct_id: "1234",
+            $distinct_id: "1234",
             token: "dummy-token",
           },
         ])
@@ -300,7 +300,7 @@ describe("Mixpanel library", () => {
         JSON.stringify([
           {
             $unset: ["hasAccount"],
-            distinct_id: "1234",
+            $distinct_id: "1234",
             token: "dummy-token",
           },
         ])
